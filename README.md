@@ -227,7 +227,7 @@ Creado con bisturí, lupa y respeto por la red.
 
 ✨ *"No todo análisis necesita ruido. A veces solo escuchar es suficiente."* ✨
 <p align="center">
-  <img src="https://capsule-render.vercel.app/api?type=rect&height=110&section=header&text=by%20makaveli&fontSize=42&fontColor=FF0055&animation=fadeIn&color=10,0,20,40,60" />
+  <img src="https://capsule-render.vercel.app/api?type=rect&height=110&section=header&text=By%20Makaveliw&fontSize=42&fontColor=FF0055&animation=fadeIn&color=10,0,20,40,60" />
 </p>
 
 <p align="center">
