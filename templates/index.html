@@ -1,1 +1,1626 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="utf-8"/>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+    <title>◈ OBSERVADOR X-RAY ◈</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    
+    <style>
+    /* === VARIABLES CYBERPUNK=== */
+
+.author-section {
+    background: linear-gradient(180deg, 
+        rgba(15, 23, 42, 0) 0%,
+        rgba(15, 23, 42, 0.8) 20%,
+        rgba(15, 23, 42, 0.9) 100%);
+    border-top: 1px solid rgba(6, 182, 212, 0.1);
+    margin-top: 60px;
+    padding: 40px 20px 20px;
+    position: relative;
+    overflow: hidden;
+}
+
+.author-section::before {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    height: 1px;
+    background: linear-gradient(90deg, 
+        transparent, 
+        rgba(6, 182, 212, 0.3), 
+        transparent);
+}
+
+.author-container {
+    max-width: 1200px;
+    margin: 0 auto;
+    display: grid;
+    grid-template-columns: auto 1fr;
+    gap: 40px;
+    align-items: start;
+}
+
+/* Avatar del autor */
+.author-avatar {
+    position: relative;
+    width: 120px;
+    height: 120px;
+}
+
+.avatar-icon {
+    width: 100%;
+    height: 100%;
+    background: linear-gradient(135deg, #06b6d4, #8b5cf6);
+    border-radius: 50%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 2.5rem;
+    color: white;
+    position: relative;
+    z-index: 2;
+    box-shadow: 0 10px 30px rgba(6, 182, 212, 0.3);
+}
+
+.avatar-glow {
+    position: absolute;
+    top: -10px;
+    left: -10px;
+    right: -10px;
+    bottom: -10px;
+    background: linear-gradient(135deg, #06b6d4, #8b5cf6);
+    border-radius: 50%;
+    filter: blur(20px);
+    opacity: 0.3;
+    animation: glow-pulse 3s ease-in-out infinite;
+}
+
+@keyframes glow-pulse {
+    0%, 100% { opacity: 0.2; transform: scale(1); }
+    50% { opacity: 0.4; transform: scale(1.05); }
+}
+
+/* Información del autor */
+.author-info {
+    grid-column: 2;
+}
+
+.author-name {
+    font-size: 2rem;
+    font-weight: 300;
+    color: #f1f5f9;
+    margin-bottom: 10px;
+    background: linear-gradient(135deg, #f1f5f9, #06b6d4);
+    -webkit-background-clip: text;
+    background-clip: text;
+    color: transparent;
+}
+
+.author-tagline {
+    color: #94a3b8;
+    font-size: 1.1rem;
+    margin-bottom: 25px;
+    font-weight: 300;
+}
+
+.author-meta {
+    display: flex;
+    gap: 20px;
+    flex-wrap: wrap;
+}
+
+.meta-item {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    color: #cbd5e1;
+    font-size: 0.9rem;
+    padding: 8px 16px;
+    background: rgba(255, 255, 255, 0.05);
+    border-radius: 20px;
+    border: 1px solid rgba(255, 255, 255, 0.1);
+    transition: all 0.3s ease;
+}
+
+.meta-item:hover {
+    background: rgba(6, 182, 212, 0.1);
+    border-color: rgba(6, 182, 212, 0.3);
+    transform: translateY(-2px);
+}
+
+.meta-item i {
+    color: #06b6d4;
+}
+
+/* Créditos */
+.author-credits {
+    grid-column: 1 / -1;
+    display: grid;
+    grid-template-columns: 1fr auto;
+    gap: 40px;
+    margin-top: 40px;
+    padding-top: 40px;
+    border-top: 1px solid rgba(255, 255, 255, 0.05);
+}
+
+.credits-section h4 {
+    font-size: 1rem;
+    color: #f1f5f9;
+    margin-bottom: 10px;
+    text-transform: uppercase;
+    letter-spacing: 0.05em;
+}
+
+.credits-section p {
+    color: #94a3b8;
+    font-size: 0.9rem;
+    line-height: 1.6;
+    margin-bottom: 8px;
+}
+
+.credit-note {
+    font-size: 0.85rem;
+    color: #64748b;
+    font-style: italic;
+    margin-top: 15px;
+}
+
+.tech-credits {
+    display: flex;
+    gap: 12px;
+    align-items: center;
+}
+
+.tech-item {
+    padding: 6px 15px;
+    background: rgba(6, 182, 212, 0.1);
+    color: #06b6d4;
+    border-radius: 20px;
+    font-size: 0.85rem;
+    font-weight: 500;
+    border: 1px solid rgba(6, 182, 212, 0.2);
+    transition: all 0.3s ease;
+}
+
+.tech-item:hover {
+    background: rgba(6, 182, 212, 0.2);
+    transform: translateY(-2px);
+}
+
+/* Mensaje personal */
+.author-message {
+    grid-column: 1 / -1;
+    margin-top: 40px;
+    display: flex;
+    justify-content: center;
+}
+
+.message-bubble {
+    background: rgba(30, 41, 59, 0.6);
+    border: 1px solid rgba(6, 182, 212, 0.2);
+    border-radius: 20px;
+    padding: 25px 40px;
+    position: relative;
+    max-width: 600px;
+    text-align: center;
+    backdrop-filter: blur(10px);
+}
+
+.message-bubble p {
+    color: #cbd5e1;
+    font-size: 1.1rem;
+    font-style: italic;
+    line-height: 1.6;
+    margin: 0;
+}
+
+.message-bubble i:first-child {
+    position: absolute;
+    top: 15px;
+    left: 20px;
+    color: #06b6d4;
+    font-size: 1.2rem;
+    opacity: 0.5;
+}
+
+.message-bubble i:last-child {
+    position: absolute;
+    bottom: 15px;
+    right: 20px;
+    color: #06b6d4;
+    font-size: 1.2rem;
+    opacity: 0.5;
+}
+
+/* Línea separadora */
+.author-divider {
+    grid-column: 1 / -1;
+    display: flex;
+    align-items: center;
+    gap: 20px;
+    margin: 40px 0;
+}
+
+.divider-line {
+    flex: 1;
+    height: 1px;
+    background: linear-gradient(90deg, 
+        transparent, 
+        rgba(6, 182, 212, 0.2), 
+        transparent);
+}
+
+.divider-icon {
+    color: #06b6d4;
+    font-size: 1.2rem;
+}
+
+/* Footer final */
+.author-footer {
+    grid-column: 1 / -1;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding-top: 20px;
+    border-top: 1px solid rgba(255, 255, 255, 0.05);
+    color: #64748b;
+    font-size: 0.85rem;
+}
+
+.footer-left, .footer-right {
+    display: flex;
+    align-items: center;
+    gap: 15px;
+}
+
+.footer-separator {
+    opacity: 0.3;
+}
+
+/* Responsive */
+@media (max-width: 768px) {
+    .author-container {
+        grid-template-columns: 1fr;
+        gap: 30px;
+    }
+    
+    .author-avatar {
+        justify-self: center;
+    }
+    
+    .author-info {
+        grid-column: 1;
+        text-align: center;
+    }
+    
+    .author-meta {
+        justify-content: center;
+    }
+    
+    .author-credits {
+        grid-template-columns: 1fr;
+        text-align: center;
+    }
+    
+    .tech-credits {
+        justify-content: center;
+    }
+    
+    .author-footer {
+        flex-direction: column;
+        gap: 15px;
+        text-align: center;
+    }
+}
+    :root {
+        --matrix: #0aff0a;
+        --neon-cyan: #00f3ff;
+        --neon-purple: #b866ff;
+        --neon-pink: #ff00ff;
+        --neon-yellow: #ffd700;
+        --neon-red: #ff0055;
+        
+        --bg-deep: #000010;
+        --bg-grid: #000a1a;
+        --panel-dark: rgba(10, 10, 30, 0.85);
+        --panel-glow: rgba(0, 243, 255, 0.1);
+        --glass: rgba(255, 255, 255, 0.03);
+        --glass-border: rgba(0, 243, 255, 0.15);
+        
+        --text-primary: #ffffff;
+        --text-secondary: #a0b3ff;
+        --text-dim: #6688cc;
+        
+        --success: #00ff9c;
+        --warning: #ffd166;
+        --danger: #ff5f5f;
+        --info: #5d8aff;
+        
+        --scan-line: linear-gradient(
+            to bottom,
+            transparent 0%,
+            rgba(0, 255, 255, 0.1) 10%,
+            rgba(0, 255, 255, 0.3) 50%,
+            rgba(0, 255, 255, 0.1) 90%,
+            transparent 100%
+        );
+    }
+
+    /* === RESET Y BASE === */
+    * {
+        margin: 0;
+        padding: 0;
+        box-sizing: border-box;
+    }
+
+    body {
+        min-height: 100vh;
+        background: 
+            radial-gradient(circle at 20% 20%, rgba(0, 100, 255, 0.05), transparent 50%),
+            radial-gradient(circle at 80% 80%, rgba(180, 0, 255, 0.05), transparent 50%),
+            linear-gradient(135deg, var(--bg-deep) 0%, var(--bg-grid) 100%),
+            repeating-linear-gradient(
+                0deg,
+                transparent,
+                transparent 1px,
+                rgba(0, 150, 255, 0.02) 1px,
+                rgba(0, 150, 255, 0.02) 2px
+            );
+        color: var(--text-primary);
+        font-family: 'Segoe UI', 'JetBrains Mono', 'Courier New', monospace;
+        overflow-x: hidden;
+        position: relative;
+    }
+
+    /* === EFECTO BACKGROUND === */
+    .matrix-bg {
+        position: fixed;
+        top: 0;
+        left: 0;
+        width: 100%;
+        height: 100%;
+        z-index: -1;
+        opacity: 0.03;
+        pointer-events: none;
+        background-image: 
+            repeating-linear-gradient(
+                90deg,
+                transparent,
+                transparent 20px,
+                var(--matrix) 20px,
+                var(--matrix) 21px
+            ),
+            repeating-linear-gradient(
+                0deg,
+                transparent,
+                transparent 20px,
+                var(--matrix) 20px,
+                var(--matrix) 21px
+            );
+    }
+
+    /* === CONTAINER PRINCIPAL === */
+    .cyber-container {
+        max-width: 1400px;
+        margin: 0 auto;
+        padding: 30px;
+        position: relative;
+        z-index: 1;
+    }
+
+    /* === HEADER CYBERPUNK === */
+    .cyber-header {
+        text-align: center;
+        margin-bottom: 40px;
+        position: relative;
+        padding: 30px;
+        background: linear-gradient(90deg, 
+            transparent 0%, 
+            rgba(0, 243, 255, 0.05) 20%, 
+            rgba(0, 243, 255, 0.1) 50%, 
+            rgba(0, 243, 255, 0.05) 80%, 
+            transparent 100%);
+        border-image: linear-gradient(90deg, 
+            transparent, 
+            var(--neon-cyan), 
+            var(--neon-purple), 
+            var(--neon-cyan), 
+            transparent) 1;
+        border-bottom: 2px solid;
+        animation: headerGlow 3s ease-in-out infinite alternate;
+    }
+
+    @keyframes headerGlow {
+        0% { box-shadow: 0 0 30px rgba(0, 243, 255, 0.3); }
+        100% { box-shadow: 0 0 60px rgba(180, 102, 255, 0.3); }
+    }
+
+    .title-main {
+        font-size: 3.5rem;
+        font-weight: 900;
+        letter-spacing: 4px;
+        margin-bottom: 10px;
+        background: linear-gradient(90deg, 
+            var(--neon-cyan), 
+            var(--neon-purple), 
+            var(--neon-pink));
+        -webkit-background-clip: text;
+        background-clip: text;
+        color: transparent;
+        text-shadow: 
+            0 0 15px rgba(0, 243, 255, 0.5),
+            0 0 30px rgba(180, 102, 255, 0.3);
+        position: relative;
+        display: inline-block;
+    }
+
+    .title-main::after {
+        content: '◈';
+        position: absolute;
+        right: -50px;
+        top: 50%;
+        transform: translateY(-50%);
+        animation: spin 10s linear infinite;
+    }
+
+    @keyframes spin {
+        100% { transform: translateY(-50%) rotate(360deg); }
+    }
+
+    .subtitle {
+        font-size: 1.2rem;
+        color: var(--text-secondary);
+        letter-spacing: 3px;
+        margin-bottom: 20px;
+        text-transform: uppercase;
+    }
+
+    .tagline {
+        font-size: 0.9rem;
+        color: var(--text-dim);
+        max-width: 600px;
+        margin: 0 auto;
+        line-height: 1.6;
+    }
+
+    /* === PANEL DE CONTROL PRINCIPAL === */
+    .control-panel {
+        background: var(--panel-dark);
+        backdrop-filter: blur(20px);
+        border: 1px solid var(--glass-border);
+        border-radius: 20px;
+        padding: 40px;
+        margin-bottom: 30px;
+        position: relative;
+        overflow: hidden;
+        box-shadow: 
+            0 20px 40px rgba(0, 0, 0, 0.5),
+            inset 0 1px 0 rgba(255, 255, 255, 0.1);
+        animation: panelFloat 6s ease-in-out infinite;
+    }
+
+    @keyframes panelFloat {
+        0%, 100% { transform: translateY(0); }
+        50% { transform: translateY(-5px); }
+    }
+
+    .control-panel::before {
+        content: '';
+        position: absolute;
+        top: 0;
+        left: 0;
+        right: 0;
+        height: 3px;
+        background: linear-gradient(90deg, 
+            var(--neon-cyan), 
+            var(--neon-purple), 
+            var(--neon-pink));
+        animation: scanLine 2s linear infinite;
+    }
+
+    @keyframes scanLine {
+        0% { transform: translateX(-100%); }
+        100% { transform: translateX(100%); }
+    }
+
+    /* === FORMULARIO CYBERPUNK === */
+    .input-group {
+        display: flex;
+        gap: 15px;
+        margin-bottom: 30px;
+        position: relative;
+    }
+
+    .url-input {
+        flex: 1;
+        padding: 18px 25px;
+        background: rgba(0, 5, 15, 0.7);
+        border: 2px solid rgba(0, 243, 255, 0.3);
+        border-radius: 12px;
+        color: var(--text-primary);
+        font-size: 1.1rem;
+        font-family: 'JetBrains Mono', monospace;
+        transition: all 0.3s ease;
+        position: relative;
+    }
+
+    .url-input:focus {
+        outline: none;
+        border-color: var(--neon-cyan);
+        box-shadow: 
+            0 0 20px rgba(0, 243, 255, 0.4),
+            inset 0 0 10px rgba(0, 243, 255, 0.1);
+        background: rgba(0, 10, 25, 0.9);
+    }
+
+    .url-input::placeholder {
+        color: rgba(255, 255, 255, 0.3);
+    }
+
+    .scan-button {
+        padding: 18px 40px;
+        background: linear-gradient(135deg, 
+            rgba(0, 243, 255, 0.1), 
+            rgba(180, 102, 255, 0.1));
+        border: 2px solid var(--neon-cyan);
+        border-radius: 12px;
+        color: var(--neon-cyan);
+        font-size: 1.1rem;
+        font-weight: bold;
+        letter-spacing: 1px;
+        cursor: pointer;
+        transition: all 0.3s ease;
+        position: relative;
+        overflow: hidden;
+        display: flex;
+        align-items: center;
+        gap: 10px;
+    }
+
+    .scan-button::before {
+        content: '';
+        position: absolute;
+        top: 0;
+        left: -100%;
+        width: 100%;
+        height: 100%;
+        background: linear-gradient(90deg, 
+            transparent, 
+            rgba(0, 243, 255, 0.2), 
+            transparent);
+        transition: 0.5s;
+    }
+
+
+    .scan-button:hover {
+        background: linear-gradient(135deg, 
+            rgba(0, 243, 255, 0.2), 
+            rgba(180, 102, 255, 0.2));
+        border-color: var(--neon-purple);
+        color: var(--neon-purple);
+        box-shadow: 
+            0 0 30px rgba(0, 243, 255, 0.4),
+            0 0 60px rgba(180, 102, 255, 0.2);
+        transform: translateY(-2px);
+    }
+
+    .scan-button:hover::before {
+        left: 100%;
+    }
+
+    .scan-button:active {
+        transform: translateY(0);
+    }
+
+    .button-icon {
+        font-size: 1.2rem;
+        animation: pulseIcon 2s infinite;
+    }
+
+    @keyframes pulseIcon {
+        0%, 100% { opacity: 1; }
+        50% { opacity: 0.5; }
+    }
+
+    /* === INTERPRETATION PANEL === */
+    .interpretation-panel {
+        background: rgba(0, 15, 30, 0.7);
+        border-radius: 15px;
+        padding: 25px;
+        margin: 30px 0;
+        border-left: 5px solid var(--neon-cyan);
+        position: relative;
+        animation: slideIn 0.8s ease-out;
+    }
+
+    @keyframes slideIn {
+        from { opacity: 0; transform: translateX(-30px); }
+        to { opacity: 1; transform: translateX(0); }
+    }
+
+    .interpretation-header {
+        display: flex;
+        align-items: center;
+        gap: 15px;
+        margin-bottom: 15px;
+    }
+
+    .interpretation-icon {
+        font-size: 1.5rem;
+        color: var(--neon-cyan);
+        animation: bounce 2s infinite;
+    }
+
+    @keyframes bounce {
+        0%, 100% { transform: translateY(0); }
+        50% { transform: translateY(-5px); }
+    }
+
+    .interpretation-text {
+        font-size: 1.2rem;
+        line-height: 1.6;
+        color: var(--text-secondary);
+        text-shadow: 0 0 10px rgba(0, 243, 255, 0.3);
+    }
+
+    /* === FINDINGS GRID === */
+    .findings-grid {
+        display: grid;
+        grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+        gap: 20px;
+        margin: 40px 0;
+    }
+
+    .finding-card {
+        background: rgba(10, 20, 40, 0.7);
+        border-radius: 15px;
+        padding: 25px;
+        border: 1px solid;
+        transition: all 0.4s ease;
+        position: relative;
+        overflow: hidden;
+        animation: cardAppear 0.6s ease-out backwards;
+    }
+
+    .finding-card:nth-child(1) { animation-delay: 0.1s; }
+    .finding-card:nth-child(2) { animation-delay: 0.2s; }
+    .finding-card:nth-child(3) { animation-delay: 0.3s; }
+    .finding-card:nth-child(4) { animation-delay: 0.4s; }
+
+    @keyframes cardAppear {
+        from { opacity: 0; transform: translateY(20px) scale(0.95); }
+        to { opacity: 1; transform: translateY(0) scale(1); }
+    }
+
+    .finding-card::before {
+        content: '';
+        position: absolute;
+        top: 0;
+        left: 0;
+        right: 0;
+        height: 3px;
+        background: var(--scan-line);
+        opacity: 0;
+        transition: opacity 0.3s;
+    }
+
+    .finding-card:hover {
+        transform: translateY(-5px);
+        box-shadow: 0 10px 30px rgba(0, 0, 0, 0.3);
+    }
+
+    .finding-card:hover::before {
+        opacity: 1;
+    }
+
+    .finding-card.security-impact {
+        border-color: var(--danger);
+        background: linear-gradient(135deg, 
+            rgba(255, 0, 85, 0.05), 
+            rgba(255, 0, 85, 0.02));
+    }
+
+    .finding-card.architectural {
+        border-color: var(--info);
+        background: linear-gradient(135deg, 
+            rgba(93, 138, 255, 0.05), 
+            rgba(93, 138, 255, 0.02));
+    }
+
+    .finding-card.hygiene {
+        border-color: var(--warning);
+        background: linear-gradient(135deg, 
+            rgba(255, 209, 102, 0.05), 
+            rgba(255, 209, 102, 0.02));
+    }
+
+    .finding-card.hardening {
+        border-color: var(--success);
+        background: linear-gradient(135deg, 
+            rgba(0, 255, 156, 0.05), 
+            rgba(0, 255, 156, 0.02));
+    }
+
+    .finding-header {
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+        margin-bottom: 15px;
+    }
+
+    .finding-title {
+        font-size: 1.3rem;
+        font-weight: bold;
+        color: var(--text-primary);
+        text-shadow: 0 0 10px currentColor;
+    }
+
+    .finding-icon {
+        font-size: 1.5rem;
+        animation: spinSlow 20s linear infinite;
+    }
+
+    @keyframes spinSlow {
+        100% { transform: rotate(360deg); }
+    }
+
+    .finding-detail {
+        color: var(--text-secondary);
+        line-height: 1.6;
+        margin-bottom: 15px;
+        font-size: 0.95rem;
+    }
+
+    .finding-meaning {
+        font-size: 0.85rem;
+        color: var(--text-dim);
+        font-style: italic;
+        padding-top: 15px;
+        border-top: 1px solid rgba(255, 255, 255, 0.1);
+    }
+
+    /* === TIMELINE CYBERPUNK === */
+    .timeline-container {
+        background: rgba(0, 10, 25, 0.7);
+        border-radius: 15px;
+        padding: 25px;
+        margin-top: 40px;
+        position: relative;
+        overflow: hidden;
+    }
+
+    .timeline-header {
+        display: flex;
+        align-items: center;
+        gap: 15px;
+        margin-bottom: 20px;
+        color: var(--neon-cyan);
+    }
+
+    .timeline-track {
+        display: flex;
+        overflow-x: auto;
+        gap: 15px;
+        padding: 20px 0;
+        scrollbar-width: thin;
+        scrollbar-color: var(--neon-cyan) transparent;
+    }
+
+    .timeline-track::-webkit-scrollbar {
+        height: 8px;
+    }
+
+    .timeline-track::-webkit-scrollbar-track {
+        background: rgba(0, 243, 255, 0.1);
+        border-radius: 4px;
+    }
+
+    .timeline-track::-webkit-scrollbar-thumb {
+        background: var(--neon-cyan);
+        border-radius: 4px;
+    }
+
+    .timeline-node {
+        flex: 0 0 auto;
+        background: rgba(0, 20, 40, 0.8);
+        padding: 15px;
+        border-radius: 10px;
+        min-width: 180px;
+        border: 1px solid rgba(0, 243, 255, 0.3);
+        position: relative;
+        transition: all 0.3s ease;
+        animation: nodePulse 3s infinite;
+    }
+
+    .timeline-node:hover {
+        transform: translateY(-3px);
+        box-shadow: 0 5px 15px rgba(0, 243, 255, 0.2);
+        border-color: var(--neon-cyan);
+    }
+
+    @keyframes nodePulse {
+        0%, 100% { box-shadow: 0 0 5px rgba(0, 243, 255, 0.3); }
+        50% { box-shadow: 0 0 15px rgba(0, 243, 255, 0.5); }
+    }
+
+    .timeline-node::before {
+        content: '';
+        position: absolute;
+        top: 50%;
+        left: -8px;
+        transform: translateY(-50%);
+        width: 16px;
+        height: 16px;
+        background: var(--neon-cyan);
+        border-radius: 50%;
+        box-shadow: 0 0 10px var(--neon-cyan);
+    }
+
+    .node-sample {
+        font-weight: bold;
+        color: var(--neon-cyan);
+        font-size: 1.1rem;
+        margin-bottom: 5px;
+    }
+
+    .node-status {
+        color: var(--text-primary);
+        font-size: 0.9rem;
+        margin-bottom: 5px;
+    }
+
+    .node-time {
+        color: var(--text-dim);
+        font-size: 0.8rem;
+    }
+
+    /* === HUD STATUS === */
+    .hud-status {
+        position: fixed;
+        bottom: 20px;
+        right: 20px;
+        display: flex;
+        gap: 10px;
+        z-index: 1000;
+    }
+
+    .hud-item {
+        background: rgba(0, 20, 40, 0.9);
+        padding: 10px 15px;
+        border-radius: 10px;
+        border: 1px solid rgba(0, 243, 255, 0.3);
+        font-size: 0.9rem;
+        display: flex;
+        align-items: center;
+        gap: 8px;
+        backdrop-filter: blur(10px);
+        animation: hudPulse 4s infinite;
+    }
+
+    @keyframes hudPulse {
+        0%, 100% { opacity: 0.8; }
+        50% { opacity: 1; }
+    }
+
+    /* === RESPONSIVE DESIGN === */
+    @media (max-width: 1024px) {
+        .cyber-container {
+            padding: 20px;
+        }
+        
+        .title-main {
+            font-size: 2.5rem;
+        }
+        
+        .findings-grid {
+            grid-template-columns: 1fr;
+        }
+        
+        .score-display {
+            grid-template-columns: 1fr;
+            text-align: center;
+        }
+    }
+
+    @media (max-width: 768px) {
+        .input-group {
+            flex-direction: column;
+        }
+        
+        .title-main {
+            font-size: 2rem;
+        }
+        
+        .scan-button {
+            justify-content: center;
+        }
+    }
+
+    /* === LOADING ANIMATION === */
+    .loading-overlay {
+        position: fixed;
+        top: 0;
+        left: 0;
+        right: 0;
+        bottom: 0;
+        background: rgba(0, 5, 15, 0.95);
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        z-index: 2000;
+        opacity: 0;
+        pointer-events: none;
+        transition: opacity 0.3s;
+    }
+
+    .loading-overlay.active {
+        opacity: 1;
+        pointer-events: all;
+    }
+
+    .cyber-loader {
+        text-align: center;
+    }
+
+    .loader-ring {
+        width: 100px;
+        height: 100px;
+        border: 5px solid rgba(0, 243, 255, 0.1);
+        border-top: 5px solid var(--neon-cyan);
+        border-radius: 50%;
+        animation: spin 1s linear infinite;
+        margin-bottom: 20px;
+    }
+
+    .loader-text {
+        color: var(--neon-cyan);
+        font-size: 1.2rem;
+        letter-spacing: 3px;
+        text-transform: uppercase;
+        animation: textGlow 2s infinite alternate;
+    }
+
+    @keyframes textGlow {
+        0% { text-shadow: 0 0 10px var(--neon-cyan); }
+        100% { text-shadow: 0 0 20px var(--neon-purple); }
+    }
+
+    /* === PARTICULAS DE FONDO === */
+    .particles {
+        position: fixed;
+        top: 0;
+        left: 0;
+        width: 100%;
+        height: 100%;
+        z-index: -1;
+        pointer-events: none;
+    }
+
+    .particle {
+        position: absolute;
+        width: 2px;
+        height: 2px;
+        background: var(--neon-cyan);
+        border-radius: 50%;
+        animation: particleFloat 20s infinite linear;
+    }
+
+    @keyframes particleFloat {
+        0% {
+            transform: translateY(100vh) translateX(0);
+            opacity: 0;
+        }
+        10% {
+            opacity: 1;
+        }
+        90% {
+            opacity: 1;
+        }
+        100% {
+            transform: translateY(-100px) translateX(100px);
+            opacity: 0;
+        }
+    }
+
+    /* === TERMINAL OUTPUT === */
+    .terminal-output {
+        background: rgba(0, 10, 20, 0.9);
+        border-radius: 10px;
+        padding: 20px;
+        margin-top: 30px;
+        border: 1px solid rgba(0, 243, 255, 0.2);
+        font-family: 'Courier New', monospace;
+        font-size: 0.9rem;
+        max-height: 200px;
+        overflow-y: auto;
+        display: none;
+    }
+
+    .terminal-output.active {
+        display: block;
+        animation: terminalAppear 0.5s ease;
+    }
+
+    @keyframes terminalAppear {
+        from { opacity: 0; transform: translateY(20px); }
+        to { opacity: 1; transform: translateY(0); }
+    }
+
+    .terminal-line {
+        margin-bottom: 5px;
+        color: var(--matrix);
+        line-height: 1.4;
+    }
+
+    .terminal-line.success { color: var(--success); }
+    .terminal-line.warning { color: var(--warning); }
+    .terminal-line.error { color: var(--danger); }
+    .terminal-line.info { color: var(--info); }
+
+    /* === EFECTO NEON TEXT === */
+    .neon-text {
+        text-shadow: 
+            0 0 5px currentColor,
+            0 0 10px currentColor,
+            0 0 20px currentColor,
+            0 0 40px currentColor;
+        animation: neonFlicker 3s infinite alternate;
+    }
+
+    @keyframes neonFlicker {
+        0%, 19%, 21%, 23%, 25%, 54%, 56%, 100% {
+            opacity: 1;
+            text-shadow: 
+                0 0 5px currentColor,
+                0 0 10px currentColor,
+                0 0 20px currentColor,
+                0 0 40px currentColor;
+        }
+        20%, 24%, 55% {
+            opacity: 0.8;
+            text-shadow: 
+                0 0 2px currentColor,
+                0 0 5px currentColor,
+                0 0 10px currentColor,
+                0 0 20px currentColor;
+        }
+    }
+    </style>
+</head>
+
+<body>
+    <!-- MATRIX BACKGROUND -->
+    <div class="matrix-bg"></div>
+    
+    <!-- PARTICULAS FLOTANTES -->
+    <div class="particles" id="particles"></div>
+    
+    <!-- LOADING OVERLAY -->
+    <div class="loading-overlay" id="loading">
+        <div class="cyber-loader">
+            <div class="loader-ring"></div>
+            <div class="loader-text">ESCANEANDO</div>
+        </div>
+    </div>
+    
+    <!-- HUD STATUS -->
+    <div class="hud-status">
+        <div class="hud-item">
+            <i class="fas fa-satellite-dish"></i>
+            <span>ONLINE</span>
+        </div>
+        <div class="hud-item">
+            <i class="fas fa-shield-alt"></i>
+            <span>SECURE</span>
+        </div>
+    </div>
+    
+    <!-- CONTENIDO PRINCIPAL -->
+    <div class="cyber-container">
+        <!-- HEADER -->
+        <header class="cyber-header">
+            <h1 class="title-main neon-text">◈ OBSERVADOR X-RAY ◈</h1>
+            <div class="subtitle">FORENSE WEB DE PRÓXIMA GENERACIÓN ByMakaveli</div>
+            <div class="tagline">
+                Sistema de análisis arquitectónico profundo · Visualización de señales internas · Visualmente elegante
+            </div>
+        </header>
+        
+        <!-- PANEL DE CONTROL PRINCIPAL -->
+        <div class="control-panel">
+            <form id="scanForm">
+                <div class="input-group">
+                    <input type="url" id="urlInput" class="url-input" 
+                           placeholder="https://ejemplo.com" 
+                           required
+                           autocomplete="off"
+                           spellcheck="false">
+                    <button type="submit" class="scan-button">
+                        <i class="fas fa-satellite button-icon"></i>
+                        <span>INICIAR ESCANEO</span>
+                    </button>
+                </div>
+            </form>
+            
+            <!-- INTERPRETATION -->
+            <div class="interpretation-panel">
+                <div class="interpretation-header">
+                    <i class="fas fa-brain interpretation-icon"></i>
+                    <h3>INTERPRETACIÓN DEL SISTEMA</h3>
+                </div>
+                <div class="interpretation-text" id="interpretationText">
+                    Esperando análisis...
+                </div>
+            </div>
+        </div>
+        
+        <!-- FINDINGS GRID -->
+        <div class="findings-grid" id="findingsGrid">
+            <!-- Las tarjetas se generarán dinámicamente -->
+        </div>
+        
+        <!-- TIMELINE -->
+        <div class="timeline-container">
+            <div class="timeline-header">
+                <i class="fas fa-wave-square"></i>
+                <h3>LINEA TEMPORAL FORENSE</h3>
+            </div>
+            <div class="timeline-track" id="timelineTrack">
+                <!-- Los nodos se generarán dinámicamente -->
+            </div>
+        </div>
+        
+        <!-- TERMINAL OUTPUT -->
+        <div class="terminal-output" id="terminalOutput">
+            <!-- Salida de terminal se generará dinámicamente -->
+        </div>
+    </div>
+    
+    <script>
+    // === CONFIGURACIÓN INICIAL ===
+    const meaning = {
+        hygiene: "Exposición informativa · No implica vulnerabilidad per se · Metadata arquitectónica",
+        architectural: "Decisión estructural observable · Revela patrones de diseño interno · Arquitectura expuesta",
+        "security-impact": "Señal crítica detectada · Indica bifurcaciones reales · Requiere atención inmediata",
+        hardening: "Control defensivo activo · Reducción deliberada de superficie · Seguridad proactiva"
+    };
+    
+    const classifications = {
+        "security-impact": { color: "#ff0055", icon: "fas fa-exclamation-triangle", name: "IMPACTO SEGURIDAD" },
+        "architectural": { color: "#5d8aff", icon: "fas fa-project-diagram", name: "ARQUITECTURA" },
+        "hygiene": { color: "#ffd700", icon: "fas fa-shield-virus", name: "HIGIENE" },
+        "hardening": { color: "#00ff9c", icon: "fas fa-lock", name: "ENDUREcimiento" }
+    };
+    
+    // === INICIALIZAR PARTÍCULAS ===
+    function initParticles() {
+        const container = document.getElementById('particles');
+        const particleCount = 50;
+        
+        for (let i = 0; i < particleCount; i++) {
+            const particle = document.createElement('div');
+            particle.className = 'particle';
+            
+            // Posición aleatoria
+            particle.style.left = `${Math.random() * 100}%`;
+            particle.style.top = `${Math.random() * 100}%`;
+            
+            // Tamaño aleatorio
+            const size = Math.random() * 2 + 1;
+            particle.style.width = `${size}px`;
+            particle.style.height = `${size}px`;
+            
+            // Color aleatorio (azul-cyan)
+            const hue = 180 + Math.random() * 60;
+            particle.style.backgroundColor = `hsl(${hue}, 100%, 60%)`;
+            
+            // Retraso de animación aleatorio
+            particle.style.animationDelay = `${Math.random() * 20}s`;
+            
+            container.appendChild(particle);
+        }
+    }
+    
+    // === ANIMACIÓN DE CARGA ===
+    function showLoading(show) {
+        const loading = document.getElementById('loading');
+        if (show) {
+            loading.classList.add('active');
+        } else {
+            loading.classList.remove('active');
+        }
+    }
+    
+    // === AGREGAR LÍNEA A TERMINAL ===
+    function addTerminalLine(text, type = 'info') {
+        const terminal = document.getElementById('terminalOutput');
+        const line = document.createElement('div');
+        line.className = `terminal-line ${type}`;
+        line.textContent = `> ${text}`;
+        terminal.appendChild(line);
+        terminal.scrollTop = terminal.scrollHeight;
+        
+        if (!terminal.classList.contains('active')) {
+            terminal.classList.add('active');
+        }
+    }
+    
+    // === SIMULAR ESCANEO ===
+    function simulateScan() {
+        addTerminalLine('Iniciando escaneo X-RAY...', 'info');
+        addTerminalLine('Conectando con endpoint...', 'info');
+        
+        const messages = [
+            'Analizando cabeceras HTTP...',
+            'Examinando configuración TLS...',
+            'Mapeando arquitectura backend...',
+            'Detectando patrones de seguridad...',
+            'Evaluando exposición informativa...',
+            'Generando diagnóstico arquitectónico...'
+        ];
+        
+        let i = 0;
+        const interval = setInterval(() => {
+            if (i < messages.length) {
+                addTerminalLine(messages[i], 'success');
+                i++;
+            } else {
+                clearInterval(interval);
+                addTerminalLine('Escaneo completado ✓', 'success');
+            }
+        }, 500);
+    }
+    
+    // === ACTUALIZAR SCORE ===
+    function updateScore(score) {
+        const scoreNumber = document.getElementById('scoreNumber');
+        const scoreBar = document.getElementById('scoreBar');
+        const scorePercentage = document.getElementById('scorePercentage');
+        
+        // Animación del número
+        let currentScore = 0;
+        const duration = 1500;
+        const steps = 60;
+        const increment = score / steps;
+        const interval = duration / steps;
+        
+        const counter = setInterval(() => {
+            currentScore += increment;
+            if (currentScore >= score) {
+                currentScore = score;
+                clearInterval(counter);
+            }
+            
+            const displayScore = Math.round(currentScore);
+            scoreNumber.textContent = displayScore;
+            scoreBar.style.width = `${currentScore}%`;
+            scorePercentage.textContent = `${displayScore}%`;
+        }, interval);
+        
+        // Actualizar interpretación
+        const interpretation = document.getElementById('interpretationText');
+        if (score > 70) {
+            interpretation.innerHTML = `
+                <span class="neon-text" style="color: #ff0055">🩻 SISTEMA CON COMPLEJIDAD INTERNA ALTA</span><br>
+                El X-RAY detecta múltiples capas activas y arquitectura compleja.<br>
+                <span style="color: #a0b3ff">Se observan patrones de exposición significativos.</span>
+            `;
+        } else if (score > 40) {
+            interpretation.innerHTML = `
+                <span class="neon-text" style="color: #ffd700">🧬 ARQUITECTURA MODERADAMENTE EXPRESIVA</span><br>
+                Decisiones internas visibles con exposición controlada.<br>
+                <span style="color: #a0b3ff">Balance entre funcionalidad y opacidad.</span>
+            `;
+        } else {
+            interpretation.innerHTML = `
+                <span class="neon-text" style="color: #00ff9c">🛡️ SUPERFICIE ESTABLE Y CONTROLADA</span><br>
+                Predomina la normalización y hardening activo.<br>
+                <span style="color: #a0b3ff">Arquitectura conservadora con baja exposición.</span>
+            `;
+        }
+    }
+    
+    // === MOSTRAR FINDINGS ===
+    function displayFindings(findings) {
+        const grid = document.getElementById('findingsGrid');
+        grid.innerHTML = '';
+        
+        findings.forEach((finding, index) => {
+            const classification = classifications[finding.classification];
+            
+            const card = document.createElement('div');
+            card.className = `finding-card ${finding.classification}`;
+            card.style.animationDelay = `${index * 0.1}s`;
+            
+            card.innerHTML = `
+                <div class="finding-header">
+                    <div class="finding-title" style="color: ${classification.color}">
+                        ${classification.name}
+                    </div>
+                    <i class="${classification.icon} finding-icon" style="color: ${classification.color}"></i>
+                </div>
+                <div class="finding-detail">
+                    <strong>${finding.name}</strong><br>
+                    ${finding.detail}
+                </div>
+                <div class="finding-meaning">
+                    ${meaning[finding.classification]}
+                </div>
+            `;
+            
+            // Efecto hover avanzado
+            card.addEventListener('mouseenter', () => {
+                card.style.transform = 'translateY(-8px) scale(1.02)';
+                card.style.boxShadow = `0 15px 40px ${classification.color}40`;
+            });
+            
+            card.addEventListener('mouseleave', () => {
+                card.style.transform = 'translateY(0) scale(1)';
+                card.style.boxShadow = 'none';
+            });
+            
+            grid.appendChild(card);
+        });
+    }
+    
+    // === MOSTRAR TIMELINE ===
+    function displayTimeline(timeline) {
+        const track = document.getElementById('timelineTrack');
+        track.innerHTML = '';
+        
+        timeline.forEach((node, index) => {
+            const nodeEl = document.createElement('div');
+            nodeEl.className = 'timeline-node';
+            nodeEl.style.animationDelay = `${index * 0.2}s`;
+            
+            const statusColor = node.status >= 400 ? '#ff0055' : 
+                              node.status >= 300 ? '#ffd700' : '#00ff9c';
+            
+            nodeEl.innerHTML = `
+                <div class="node-sample" style="color: ${statusColor}">
+                    #${node.sample}
+                </div>
+                <div class="node-status">
+                    Status: <strong style="color: ${statusColor}">${node.status}</strong>
+                </div>
+                <div class="node-time">
+                    ${node.time_ms}ms
+                </div>
+            `;
+            
+            track.appendChild(nodeEl);
+        });
+    }
+    
+    // === MANEJAR ESCANEO ===
+    document.getElementById('scanForm').onsubmit = async (e) => {
+        e.preventDefault();
+        
+        const urlInput = document.getElementById('urlInput');
+        const url = urlInput.value.trim();
+        
+        if (!url) {
+            addTerminalLine('Error: URL requerida', 'error');
+            return;
+        }
+        
+        // Mostrar loading
+        showLoading(true);
+        
+        // Limpiar resultados anteriores
+        document.getElementById('terminalOutput').innerHTML = '';
+        document.getElementById('terminalOutput').classList.remove('active');
+        
+        // Simular escaneo
+        simulateScan();
+        
+        try {
+            // Enviar solicitud al backend
+            const formData = new FormData();
+            formData.append('url', url);
+            
+            const response = await fetch('/api/analyze', {
+                method: 'POST',
+                body: formData
+            });
+            
+            if (!response.ok) {
+                throw new Error(`HTTP ${response.status}`);
+            }
+            
+            const data = await response.json();
+            
+            // Pequeño delay para efecto visual
+            await new Promise(resolve => setTimeout(resolve, 1000));
+            
+            // Actualizar UI con los datos
+            let score = 0;
+            data.findings.forEach(f => {
+                if (f.classification === "security-impact") score += 30;
+                if (f.classification === "architectural") score += 15;
+                if (f.classification === "hardening") score += 5;
+            });
+            score = Math.min(100, score);
+            
+            updateScore(score);
+            displayFindings(data.findings);
+            displayTimeline(data.timeline);
+            
+            addTerminalLine(`Análisis completado para: ${url}`, 'success');
+            addTerminalLine(`Score calculado: ${score}`, 'info');
+            
+        } catch (error) {
+            addTerminalLine(`Error en escaneo: ${error.message}`, 'error');
+            updateScore(0);
+        } finally {
+            showLoading(false);
+        }
+    };
+    
+    // === EFECTOS DE TECLADO ===
+    document.getElementById('urlInput').addEventListener('focus', function() {
+        this.style.boxShadow = '0 0 30px rgba(0, 243, 255, 0.5)';
+    });
+    
+    document.getElementById('urlInput').addEventListener('blur', function() {
+        this.style.boxShadow = 'none';
+    });
+    
+    document.getElementById('urlInput').addEventListener('input', function() {
+        if (this.value) {
+            this.style.borderColor = 'var(--neon-purple)';
+        } else {
+            this.style.borderColor = 'rgba(0, 243, 255, 0.3)';
+        }
+    });
+    
+    // === EFECTO DE TIPO MÁQUINA ===
+    function typeWriter(element, text, speed = 50) {
+        element.innerHTML = '';
+        let i = 0;
+        
+        function type() {
+            if (i < text.length) {
+                element.innerHTML += text.charAt(i);
+                i++;
+                setTimeout(type, speed);
+            }
+        }
+        
+        type();
+    }
+    
+    // === INICIALIZACIÓN ===
+    document.addEventListener('DOMContentLoaded', () => {
+        // Inicializar partículas
+        initParticles();
+        
+        // Efecto de escritura en subtítulo
+        const subtitle = document.querySelector('.subtitle');
+        const originalText = subtitle.textContent;
+        subtitle.textContent = '';
+        
+        setTimeout(() => {
+            typeWriter(subtitle, originalText, 100);
+        }, 1000);
+        
+        // Efecto de parpadeo en cursor de input
+        const urlInput = document.getElementById('urlInput');
+        let cursorVisible = true;
+        
+        setInterval(() => {
+            if (document.activeElement !== urlInput) {
+                return;
+            }
+            
+            if (cursorVisible) {
+                urlInput.style.borderRightColor = 'transparent';
+            } else {
+                urlInput.style.borderRightColor = 'var(--neon-cyan)';
+            }
+            
+            cursorVisible = !cursorVisible;
+        }, 500);
+
+    });
+    
+    // === RESIZE HANDLER ===
+    window.addEventListener('resize', () => {
+        // Recalcular partículas en responsive
+        const particles = document.querySelectorAll('.particle');
+        particles.forEach(p => p.remove());
+        initParticles();
+    });
+    </script>
+ 
+<div class="author-section">
+    <div class="author-container">
+        <!-- Avatar del autor -->
+        <div class="author-avatar">
+            <div class="avatar-icon">
+                <i class="fas fa-code"></i>
+            </div>
+            <div class="avatar-glow"></div>
+        </div>
+        
+        <!-- Información del autor -->
+        <div class="author-info">
+            <h3 class="author-name">Desarrollado con ❤️</h3>
+            <p class="author-tagline">
+                Por un apasionado de la seguridad y tecnología
+            </p>
+            
+            <div class="author-meta">
+                <div class="meta-item">
+                    <i class="fas fa-heart"></i>
+                    <span>Hecho con pasión</span>
+                </div>
+                <div class="meta-item">
+                    <i class="fas fa-coffee"></i>
+                    <span>Mucho café involucrado</span>
+                </div>
+                <div class="meta-item">
+                    <i class="fas fa-bug"></i>
+                    <span>Código testeado</span>
+                </div>
+            </div>
+        </div>
+        
+        <!-- Créditos y derechos -->
+        <div class="author-credits">
+            <div class="credits-section">
+                <h4>ByMakaveli</h4>
+                <p>© 2026 - 2027 Todos los derechos reservados</p>
+                <p class="credit-note">
+                    Este software es de uso educativo y profesional.
+                    No se permite la redistribución sin autorización.
+                </p>
+            </div>
+            
+            <div class="tech-credits">
+                <span class="tech-item">Python</span>
+                <span class="tech-item">FastAPI</span>
+                <span class="tech-item">HTML/CSS/JS</span>
+            </div>
+        </div>
+        
+        <!-- Mensaje personal -->
+        <div class="author-message">
+            <div class="message-bubble">
+                <i class="fas fa-quote-left"></i>
+                <p>"La tecnología debe servir para proteger, no para dañar."</p>
+                <i class="fas fa-quote-right"></i>
+            </div>
+        </div>
+    </div>
+    
+    <!-- Línea separadora -->
+    <div class="author-divider">
+        <div class="divider-line"></div>
+        <div class="divider-icon">
+            <i class="fas fa-terminal"></i>
+        </div>
+        <div class="divider-line"></div>
+    </div>
+    
+    <!-- Footer final -->
+    <div class="author-footer">
+        <div class="footer-left">
+            <span>0.0.0</span>
+            <span class="footer-separator">•</span>
+            <span>Observador X-RAY</span>
+        </div>
+        
+        <div class="footer-right">
+            <span>Uso ético y responsable</span>
+            <span class="footer-separator">•</span>
+            <span>Made with 💻</span>
+        </div>
+    </div>
+</div>
+</body>
+</html>
 
